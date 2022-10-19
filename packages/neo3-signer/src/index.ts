@@ -49,4 +49,9 @@ export interface Neo3Signer {
    * @return true if the signedMessage is acknowledged by the account
    */
   verifyMessage (params: SignedMessage): Promise<boolean>
+
+  /**
+   * returns the address of the account, not as safe as using signMessage and getting the publicKey
+   */
+  getAccountAddress (): string | null
 }

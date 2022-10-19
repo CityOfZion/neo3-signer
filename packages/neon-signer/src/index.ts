@@ -51,4 +51,11 @@ export class NeonSigner implements Neo3Signer {
   async verifyMessage (verifyArgs: SignedMessage): Promise<boolean> {
     return wallet.verify(verifyArgs.messageHex, verifyArgs.data, verifyArgs.publicKey)
   }
+
+  /**
+   * returns the address of the account
+   */
+  getAccountAddress (): string | null {
+    return this.account?.address ?? null
+  }
 }
