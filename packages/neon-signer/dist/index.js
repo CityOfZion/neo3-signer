@@ -59,5 +59,12 @@ class NeonSigner {
             return neon_core_1.wallet.verify(verifyArgs.messageHex, verifyArgs.data, verifyArgs.publicKey);
         });
     }
+    /**
+     * returns the address of the account
+     */
+    getAccountAddress() {
+        var _a, _b;
+        return (_b = (_a = this.account) === null || _a === void 0 ? void 0 : _a.address) !== null && _b !== void 0 ? _b : null;
+    }
 }
 exports.NeonSigner = NeonSigner;

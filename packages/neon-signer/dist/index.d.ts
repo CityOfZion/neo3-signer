@@ -7,4 +7,8 @@ export declare class NeonSigner implements Neo3Signer {
     signMessageLegacy(message: string): SignedMessage;
     signMessageNew(message: string): SignedMessage;
     verifyMessage(verifyArgs: SignedMessage): Promise<boolean>;
+    /**
+     * returns the address of the account
+     */
+    getAccountAddress(): string | null;
 }
