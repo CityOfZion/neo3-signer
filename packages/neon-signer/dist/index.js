@@ -9,7 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NeonSigner = void 0;
+exports.NeonSigner = exports.Version = void 0;
+const neo3_signer_1 = require("@cityofzion/neo3-signer");
+Object.defineProperty(exports, "Version", { enumerable: true, get: function () { return neo3_signer_1.Version; } });
 const neon_core_1 = require("@cityofzion/neon-core");
 const randomBytes = require("randombytes");
 class NeonSigner {
@@ -18,11 +20,14 @@ class NeonSigner {
     }
     signMessage(message) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (message.version === 1) {
+            if (message.version === neo3_signer_1.Version.LEGACY) {
                 return this.signMessageLegacy(message.message);
             }
+            else if (message.version === neo3_signer_1.Version.WITHOUT_SALT) {
+                return this.signMessageWithoutSalt(message.message);
+            }
             else {
-                return this.signMessageNew(message.message);
+                return this.signMessageDefault(message.message);
             }
         });
     }
@@ -41,7 +46,7 @@ class NeonSigner {
             messageHex
         };
     }
-    signMessageNew(message) {
+    signMessageDefault(message) {
         if (!this.account) {
             throw new Error('No account provided');
         }
@@ -51,6 +56,17 @@ class NeonSigner {
             publicKey: this.account.publicKey,
             data: neon_core_1.wallet.sign(messageHex, this.account.privateKey, salt),
             salt,
+            messageHex
+        };
+    }
+    signMessageWithoutSalt(message) {
+        if (!this.account) {
+            throw new Error('No account provided');
+        }
+        const messageHex = neon_core_1.u.str2hexstring(message);
+        return {
+            publicKey: this.account.publicKey,
+            data: neon_core_1.wallet.sign(messageHex, this.account.privateKey),
             messageHex
         };
     }

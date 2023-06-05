@@ -1,16 +1,20 @@
-import {Neo3Signer, SignMessagePayload, SignedMessage} from '@cityofzion/neo3-signer'
+import {Neo3Signer, SignMessagePayload, SignedMessage, Version} from '@cityofzion/neo3-signer'
 import { wallet, u } from '@cityofzion/neon-core'
 import * as randomBytes from 'randombytes'
+
+export { Version }
 
 export class NeonSigner implements Neo3Signer {
   public constructor (public account?: wallet.Account) {
   }
 
   async signMessage(message: SignMessagePayload): Promise<SignedMessage> {
-    if (message.version === 1) {
+    if (message.version === Version.LEGACY) {
       return this.signMessageLegacy(message.message)
+    } else if(message.version === Version.WITHOUT_SALT) {
+      return this.signMessageWithoutSalt(message.message)
     } else {
-      return this.signMessageNew(message.message)
+      return this.signMessageDefault(message.message)
     }
   }
 
@@ -32,7 +36,7 @@ export class NeonSigner implements Neo3Signer {
     }
   }
 
-  signMessageNew (message: string): SignedMessage {
+  signMessageDefault (message: string): SignedMessage {
     if (!this.account) {
       throw new Error('No account provided')
     }
@@ -44,6 +48,19 @@ export class NeonSigner implements Neo3Signer {
       publicKey: this.account.publicKey,
       data: wallet.sign(messageHex, this.account.privateKey, salt),
       salt,
+      messageHex
+    }
+  }
+
+  signMessageWithoutSalt (message: string): SignedMessage {
+    if (!this.account) {
+      throw new Error('No account provided')
+    }
+    const messageHex = u.str2hexstring(message)
+
+    return {
+      publicKey: this.account.publicKey,
+      data: wallet.sign(messageHex, this.account.privateKey),
       messageHex
     }
   }

@@ -17,13 +17,27 @@ describe('Neon Tests', function () {
         const acc = new Neon.wallet.Account('fb1f57cc1347ae5b6251dc8bae761362d2ecaafec4c87f4dc9e97fef6dd75014');
         const signer = new index_1.NeonSigner(acc);
         const signed = yield signer.signMessage({
-            version: 2,
+            version: index_1.Version.DEFAULT,
             message: 'my random message'
         });
-        console.assert(signed.salt.length > 0);
-        console.assert(signed.messageHex.length > 0);
-        console.assert(signed.data.length > 0);
-        console.assert(signed.publicKey.length > 0);
+        assert(signed.salt.length > 0);
+        assert(signed.messageHex.length > 0);
+        assert(signed.data.length > 0);
+        assert(signed.publicKey.length > 0);
+        const verified = yield signer.verifyMessage(signed);
+        assert(verified);
+    }));
+    it("can sign with no salt and verify", () => __awaiter(this, void 0, void 0, function* () {
+        const acc = new Neon.wallet.Account('fb1f57cc1347ae5b6251dc8bae761362d2ecaafec4c87f4dc9e97fef6dd75014');
+        const signer = new index_1.NeonSigner(acc);
+        const signed = yield signer.signMessage({
+            version: index_1.Version.WITHOUT_SALT,
+            message: 'my random message'
+        });
+        assert(signed.salt === undefined);
+        assert(signed.messageHex.length > 0);
+        assert(signed.data.length > 0);
+        assert(signed.publicKey.length > 0);
         const verified = yield signer.verifyMessage(signed);
         assert(verified);
     }));
