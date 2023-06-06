@@ -1,4 +1,4 @@
-import { NeonSigner } from './index'
+import { NeonSigner, Version } from './index'
 import * as Neon from '@cityofzion/neon-core'
 import * as assert from 'assert'
 
@@ -9,14 +9,33 @@ describe('Neon Tests', function () {
     const signer = new NeonSigner(acc)
 
     const signed = await signer.signMessage({
-      version: 2,
+      version: Version.DEFAULT,
       message: 'my random message'
     })
 
-    console.assert(signed.salt.length > 0)
-    console.assert(signed.messageHex.length > 0)
-    console.assert(signed.data.length > 0)
-    console.assert(signed.publicKey.length > 0)
+    assert(signed.salt.length > 0)
+    assert(signed.messageHex.length > 0)
+    assert(signed.data.length > 0)
+    assert(signed.publicKey.length > 0)
+
+    const verified = await signer.verifyMessage(signed)
+
+    assert(verified)
+  })
+
+  it("can sign with no salt and verify", async () => {
+    const acc = new Neon.wallet.Account('fb1f57cc1347ae5b6251dc8bae761362d2ecaafec4c87f4dc9e97fef6dd75014')
+    const signer = new NeonSigner(acc)
+
+    const signed = await signer.signMessage({
+      version: Version.WITHOUT_SALT,
+      message: 'my random message'
+    })
+
+    assert(signed.salt === undefined)
+    assert(signed.messageHex.length > 0)
+    assert(signed.data.length > 0)
+    assert(signed.publicKey.length > 0)
 
     const verified = await signer.verifyMessage(signed)
 

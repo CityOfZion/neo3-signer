@@ -1,10 +1,18 @@
+/**
+ * A version enum that indicates how a message should be signed
+ */
+export enum Version {
+  LEGACY = 1,
+  DEFAULT,
+  WITHOUT_SALT
+}
 
 /**
- * A simple type that defines the SignMessage payload, where version 1 is obsolete and version 2 is compatible with NeoFS
+ * A simple type that defines the SignMessage payload, where Version.LEGACY is deprecated and Version.DEFAULT is NeoFS compatible and uses SALT, and Version.WITHOUT_SALT is NeoFS compatible and does not use SALT
  */
 export type SignMessagePayload = {
   message: string,
-  version?: number
+  version?: Version
 }
 
 /**
@@ -24,7 +32,7 @@ export type SignedMessage = {
   /**
    * salt used to encrypt
    */
-  salt: string
+  salt?: string
 
   /**
    * message hex
