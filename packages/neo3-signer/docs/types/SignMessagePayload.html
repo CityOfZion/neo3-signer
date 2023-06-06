@@ -16,7 +16,7 @@
 <li><a href="SignMessagePayload.html">SignMessagePayload</a></li></ul>
 <h1>Type alias SignMessagePayload</h1></div>
 <div class="tsd-signature">Sign<wbr/>Message<wbr/>Payload<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span><br/><span>    </span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>version<span class="tsd-signature-symbol">?: </span><a href="../enums/Version.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Version</a><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></div>
-<div class="tsd-comment tsd-typography"><p>A simple type that defines the SignMessage payload, where Version.LEGACY is obsolete and Version.DEFAULT is compatible with NeoFS</p>
+<div class="tsd-comment tsd-typography"><p>A simple type that defines the SignMessage payload, where Version.LEGACY is deprecated and Version.DEFAULT is NeoFS compatible and uses SALT, and Version.WITHOUT_SALT is NeoFS compatible and does not use SALT</p>
 </div>
 <div class="tsd-type-declaration">
 <h4>Type declaration</h4>
@@ -26,7 +26,7 @@
 <li class="tsd-parameter">
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> version<span class="tsd-signature-symbol">?: </span><a href="../enums/Version.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Version</a></h5></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/CityOfZion/neo3-signer/blob/b2d1343/packages/neo3-signer/src/index.ts#L13">index.ts:13</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/CityOfZion/neo3-signer/blob/a39420d/packages/neo3-signer/src/index.ts#L13">index.ts:13</a></li></ul></aside></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

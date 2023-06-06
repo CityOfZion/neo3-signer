@@ -7,7 +7,7 @@ export declare enum Version {
     WITHOUT_SALT = 3
 }
 /**
- * A simple type that defines the SignMessage payload, where Version.LEGACY is obsolete and Version.DEFAULT is compatible with NeoFS
+ * A simple type that defines the SignMessage payload, where Version.LEGACY is deprecated and Version.DEFAULT is NeoFS compatible and uses SALT, and Version.WITHOUT_SALT is NeoFS compatible and does not use SALT
  */
 export type SignMessagePayload = {
     message: string;
