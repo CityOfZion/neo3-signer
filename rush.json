@@ -2,23 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
   "rushVersion": "5.75.0",
   "npmVersion": "6.14.15",
-  "pnpmOptions": {
-    "useWorkspaces": true
-  },
   "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0 || >=16.13.0",
-  "gitPolicy": {},
   "repository": {
     "url": "https://github.com/cityofzion/neo3-signer",
     "defaultBranch": "main",
     "defaultRemote": "origin"
   },
-  "eventHooks": {
-    "preRushInstall": [],
-    "postRushInstall": [],
-    "preRushBuild": [],
-    "postRushBuild": []
-  },
-  "variants": [],
   "projects": [
     {
       "packageName": "@cityofzion/neo3-signer",
