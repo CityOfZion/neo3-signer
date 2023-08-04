@@ -1,6 +1,6 @@
 {
   "name": "@cityofzion/neon-signer",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,15 +14,18 @@
   "dependencies": {
     "@cityofzion/neon-core": "5.3.0",
     "@cityofzion/neon-js": "5.3.0",
-    "randombytes": "^2.1.0",
-    "@cityofzion/neo3-signer": "1.1.1"
+    "@cityofzion/neo3-signer": "1.2.0",
+    "crypto-js": "^4.1.1",
+    "elliptic": "^6.5.4",
+    "randombytes": "^2.1.0"
   },
   "devDependencies": {
     "typescript": "^4.3.2",
     "mocha": "^10.0.0",
     "@types/mocha": "^10.0.0",
     "ts-mocha": "^10.0.0",
-    "@types/expect": "^24.3.0"
+    "@types/expect": "^24.3.0",
+    "@types/elliptic": "6.4.14"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-import { Neo3Signer, SignMessagePayload, SignedMessage, Version } from '@cityofzion/neo3-signer';
+import { Neo3Signer, SignMessagePayload, SignedMessage, Version, EncryptedPayload } from '@cityofzion/neo3-signer';
 import { wallet } from '@cityofzion/neon-core';
 export { Version };
 export declare class NeonSigner implements Neo3Signer {
@@ -13,4 +13,10 @@ export declare class NeonSigner implements Neo3Signer {
      * returns the address of the account
      */
     getAccountAddress(): string | null;
+    encrypt(message: string, publicKeys: string[]): EncryptedPayload[];
+    decrypt(payload: EncryptedPayload): string;
+    decryptFromArray(payloads: EncryptedPayload[]): {
+        message: string;
+        keyIndex: number;
+    };
 }
