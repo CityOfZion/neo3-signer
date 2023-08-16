@@ -61,4 +61,44 @@ describe('Neon Tests', function () {
         });
         assert(!verified);
     }));
+    it("can encrypt and decrypt messages from the corresponding public key", () => __awaiter(this, void 0, void 0, function* () {
+        const account = new Neon.wallet.Account();
+        const signer = new index_1.NeonSigner(account);
+        const messageOriginal = "Some plaintext for encryption";
+        const messageEncrypted = signer.encrypt(messageOriginal, [account.publicKey]);
+        const messageDecrypted = signer.decrypt(messageEncrypted[0]);
+        assert(messageDecrypted === messageOriginal);
+    }));
+    it("can NOT encrypt and decrypt messages from different public keys", () => __awaiter(this, void 0, void 0, function* () {
+        const account = new Neon.wallet.Account();
+        const anotherAccount = new Neon.wallet.Account();
+        const signer = new index_1.NeonSigner(account);
+        const messageOriginal = "Some plaintext for encryption";
+        const messageEncrypted = signer.encrypt(messageOriginal, [anotherAccount.publicKey]);
+        assert.throws(() => signer.decrypt(messageEncrypted[0]));
+    }));
+    it("can encrypt and decrypt messages from an array that has the corresponding public key", () => __awaiter(this, void 0, void 0, function* () {
+        const account = new Neon.wallet.Account();
+        const anotherAccount1 = new Neon.wallet.Account();
+        const anotherAccount2 = new Neon.wallet.Account();
+        const anotherAccount3 = new Neon.wallet.Account();
+        const signer = new index_1.NeonSigner(account);
+        const messageOriginal = "Some plaintext for encryption";
+        const publicKeys = [anotherAccount3.publicKey, anotherAccount2.publicKey, anotherAccount1.publicKey, account.publicKey];
+        const messageEncrypted = signer.encrypt(messageOriginal, publicKeys);
+        const messageDecrypted = signer.decryptFromArray(messageEncrypted);
+        assert(messageDecrypted.message === messageOriginal);
+        assert(messageDecrypted.keyIndex === publicKeys.length - 1);
+    }));
+    it("can NOT encrypt and decrypt messages from an array that doesn't have the corresponding public key", () => __awaiter(this, void 0, void 0, function* () {
+        const account = new Neon.wallet.Account();
+        const anotherAccount1 = new Neon.wallet.Account();
+        const anotherAccount2 = new Neon.wallet.Account();
+        const anotherAccount3 = new Neon.wallet.Account();
+        const signer = new index_1.NeonSigner(account);
+        const messageOriginal = "Some plaintext for encryption";
+        const publicKeys = [anotherAccount3.publicKey, anotherAccount2.publicKey, anotherAccount1.publicKey];
+        const messageEncrypted = signer.encrypt(messageOriginal, publicKeys);
+        assert.throws(() => signer.decryptFromArray(messageEncrypted));
+    }));
 });
