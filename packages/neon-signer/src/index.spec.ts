@@ -74,6 +74,10 @@ describe('Neon Tests', function () {
 
     const messageEncrypted = signer.encrypt(messageOriginal, [account.publicKey])
     const messageDecrypted = signer.decrypt(messageEncrypted[0])
+    
+    for (const value of Object.values(messageEncrypted[0])) {
+      assert(!messageOriginal.includes(value))
+    }
     assert(messageDecrypted === messageOriginal)
   })
 
@@ -102,6 +106,12 @@ describe('Neon Tests', function () {
 
     assert(messageDecrypted.message === messageOriginal)
     assert(messageDecrypted.keyIndex === publicKeys.length - 1)
+
+    const anotherSigner = new NeonSigner(anotherAccount1)
+    const anotherMessageDecrypted = anotherSigner.decryptFromArray(messageEncrypted)
+    assert(anotherMessageDecrypted.message === messageOriginal)
+    assert(anotherMessageDecrypted.keyIndex !== messageDecrypted.keyIndex)
+    assert(anotherMessageDecrypted.keyIndex === publicKeys.length - 2)
   })
 
   it("can NOT encrypt and decrypt messages from an array that doesn't have the corresponding public key", async () => {
